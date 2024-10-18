@@ -346,7 +346,7 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
                                                  dplyr::arrange(x) %>%
                                                  dplyr::mutate(bbb = dplyr::row_number()) %>%
                                                  dplyr::arrange(bbb) %>%
-                                                 dplyr::mutate(nodes = forcats::fct_reorder(nodes, value, mean)) %>%
+                                                 dplyr::mutate(nodes = forcats::fct_reorder(nodes, mean)) %>%
                                                  dplyr::arrange(node, x) %>%
                                                  dplyr::group_by(node) %>%
                                                  dplyr::mutate(next_x = dplyr::lead(x),
