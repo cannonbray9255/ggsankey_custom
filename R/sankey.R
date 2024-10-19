@@ -343,10 +343,10 @@ StatSankeyBumpFlow <- ggplot2::ggproto("StatSankeyBumpFlow", ggplot2::Stat,
 
                                                data <- data %>%
                                                  dplyr::mutate(nodes = paste(node, x)) %>%
-                                                 dplyr::arrange(x) %>%
+                                                 dplyr::arrange(x, order) %>%
                                                  dplyr::mutate(bbb = dplyr::row_number()) %>%
                                                  dplyr::arrange(bbb) %>%
-                                                 dplyr::mutate(nodes = forcats::fct_reorder(nodes, mean)) %>%
+                                                 dplyr::mutate(nodes = forcats::fct_reorder(nodes, order, mean)) %>%
                                                  dplyr::arrange(node, x) %>%
                                                  dplyr::group_by(node) %>%
                                                  dplyr::mutate(next_x = dplyr::lead(x),
@@ -939,6 +939,7 @@ geom_alluvial_label <- function(mapping = NULL,
 #' @param type either 'sankey' or 'alluvial'
 #' @param smooth how much smooth should the curve have? More means steeper curve.
 #' @param inherit.aes should the geom inherit aesthetics
+#' @param order order of groups
 #' @param ... other arguments to be passed to the geo
 #'
 #' @details Other important arguments is; `space` which proves the space between nodes in the y-direction; `shift` which shifts nodes in the y-direction.
@@ -954,6 +955,7 @@ geom_sankey_bump <- function(mapping = NULL,
                              smooth = 8,
                              type = "sankey",
                              inherit.aes = TRUE,
+                             order = NULL,
                              ...) {
   params_list <- prepare_params(...)
 
